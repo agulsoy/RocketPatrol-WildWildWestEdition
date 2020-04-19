@@ -4,15 +4,15 @@ class Play extends Phaser.Scene {
     }
     preload(){
         //load images /title sprite
-        this.load.image('Rocket', './assets/Rocket.png');
-        this.load.image('Spaceship', './assets/Spaceship.png');
+        this.load.image('Cowboy', './assets/cowboy.png');
+        this.load.image('Horsemen', './assets/horseman1.png');
         this.load.image('westernBack', './assets/westernBack.png');
         this.load.spritesheet('Explosion', './assets/Explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 10});
     }
 
     create(){
         //place tile sprite
-        this.Starryback = this.add.tileSprite(0, 0, 627, 465, 'westernBack').setOrigin(0, 0);
+        this.westernBack = this.add.tileSprite(0, 0, 640, 480, 'westernBack').setOrigin(0, 0);
         console.log(this);
         
         //add background music
@@ -21,21 +21,16 @@ class Play extends Phaser.Scene {
         //play music continuously
          this.bgm.play();
 
-        //white rectangle borders
-        this.add.rectangle(5, 5, 630, 32, 0xFFFFFF).setOrigin(0,0);
-        this.add.rectangle(5, 443, 630, 32, 0xFFFFFF).setOrigin(0,0);
-        this.add.rectangle(5, 5, 32, 455, 0xFFFFFF).setOrigin(0,0);
-        this.add.rectangle(603, 5, 32, 455, 0xFFFFFF).setOrigin(0,0);
         //green UI background
         this.add.rectangle(37, 42, 566, 64, 0x00FF00).setOrigin(0.0);
 
         //add rocket (p1)
-        this.p1Rocket = new Rocket(this, game.config.width/2 - 8, 431, 'Rocket').setScale(0.5, 0.5).setOrigin(0.5, 0.5);
+        this.p1Cowboy = new Cowboy(this, game.config.width/2 - 8, 431, 'Cowboy').setScale(0.5, 0.5).setOrigin(0.5, 0.5);
 
-        //add spaceships (x3)
-        this.ship01 = new Spaceship(this, game.config.width +192, 132, 'Spaceship', 0, 30).setOrigin(0, 0); 
-        this.ship02 = new Spaceship(this, game.config.width + 96, 196, 'Spaceship', 0, 20).setOrigin(0, 0); 
-        this.ship03 = new Spaceship(this, game.config.width, 260, 'Spaceship', 0, 10).setOrigin(0, 0); 
+        //add horsemen (x3)
+        this.horseman01 = new Horsemen(this, game.config.width +192, 132, 'Horsemen', 0, 30).setOrigin(0, 0); 
+        this.horseman02 = new Horsemen(this, game.config.width + 96, 196, 'Horsemen', 0, 20).setOrigin(0, 0); 
+        this.horseman03 = new Horsemen(this, game.config.width, 260, 'Horsemen', 0, 10).setOrigin(0, 0); 
 
         //define keyboard keys
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
@@ -80,7 +75,7 @@ class Play extends Phaser.Scene {
             },
             fixedWidth: 225
         }
-        this.fireText = this.add.text(350, 54, "SHOOT COMPUTER", fireConfig).setOrigin(0, 0);
+        this.fireText = this.add.text(350, 54, "horsemanT COMPUTER", fireConfig).setOrigin(0, 0);
 
         //Display Text 
         //let centerX = game.config.width/2;
@@ -110,56 +105,56 @@ class Play extends Phaser.Scene {
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)){
             this.scene.start("menuScene");
         }
-        //scroll Starryback
-        this.Starryback.tilePositionX -= 4;
+        //scroll westernBack
+        this.westernBack.tilePositionX -= 4;
 
         if(!this.gameOver){
-            this.p1Rocket.update(); //update Rocket
-            this.ship01.update();   //update spaceships(x3)
-            this.ship02.update();
-            this.ship03.update();
+            this.p1Cowboy.update(); //update Rocket
+            this.horseman01.update();   //update horsemen(x3)
+            this.horseman02.update();
+            this.horseman03.update();
         }
 
         //check collisions
-        if(this.checkCollision(this.p1Rocket, this.ship03)){
-            this.p1Rocket.reset();
-            this.shipExplode(this.ship03);
+        if(this.checkCollision(this.p1Cowboy, this.horseman03)){
+            this.p1Cowboy.reset();
+            this.horsemanExplode(this.horseman03);
         }
-        if(this.checkCollision(this.p1Rocket, this.ship02)){
-            this.p1Rocket.reset();
-            this.shipExplode(this.ship02);
+        if(this.checkCollision(this.p1Cowboy, this.horseman02)){
+            this.p1Cowboy.reset();
+            this.horsemanExplode(this.horseman02);
         }
-        if(this.checkCollision(this.p1Rocket, this.ship01)){
-            this.p1Rocket.reset();
-            this.shipExplode(this.ship01);
+        if(this.checkCollision(this.p1Cowboy, this.horseman01)){
+            this.p1Cowboy.reset();
+            this.horsemanExplode(this.horseman01);
         }
     }
     
-    checkCollision(rocket, ship){
+    checkCollision(cowboy, horseman){
     //simple AABB checking
-        if(rocket.x < ship.x + ship.width &&
-            rocket.x + rocket.width > ship.x &&
-            rocket.y < ship.y + ship.height &&
-            rocket.height + rocket.y > ship.y) {
+        if(cowboy.x < horseman.x + horseman.width &&
+            cowboy.x + cowboy.width > horseman.x &&
+            cowboy.y < horseman.y + horseman.height &&
+            cowboy.height + cowboy.y > horseman.y) {
                 return true;
         } else{
             return false;
         }
     }
 
-    shipExplode(ship){
-        ship.alpha = 0; //temporarily hide ship
-        //create explosion sprite at ship's position
-        let boom = this.add.sprite(ship.x, ship.y, 'Explosion').setOrigin(0, 0);
+    horsemanExplode(horseman){
+        horseman.alpha = 0; //temporarily hide horseman
+        //create explosion sprite at horseman's position
+        let boom = this.add.sprite(horseman.x, horseman.y, 'Explosion').setOrigin(0, 0);
         boom.anims.play('explode'); //play explode animation
         boom.on('animationcomplete', () => {    //callback after animation complete
-            ship.reset();   //reset ship position
-            ship.alpha = 1; //make ship visible again
+            horseman.reset();   //reset horseman position
+            horseman.alpha = 1; //make horseman visible again
             boom.destroy(); //remove explosion sprite
         });
         //score increment and repaint
-        this.p1Score += ship.points;
+        this.p1Score += horseman.points;
         this.scoreLeft.text = this.p1Score;
-        this.sound.play('sfx_explosion');
+        this.sound.play('sfx_JustShot');
     }
 }
