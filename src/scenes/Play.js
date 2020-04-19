@@ -6,13 +6,13 @@ class Play extends Phaser.Scene {
         //load images /title sprite
         this.load.image('Rocket', './assets/Rocket.png');
         this.load.image('Spaceship', './assets/Spaceship.png');
-        this.load.image('Starryback', './assets/Starryback.png');
+        this.load.image('westernBack', './assets/westernBack.png');
         this.load.spritesheet('Explosion', './assets/Explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 10});
     }
 
     create(){
         //place tile sprite
-        this.Starryback = this.add.tileSprite(0, 0, 640, 480, 'Starryback').setOrigin(0, 0);
+        this.Starryback = this.add.tileSprite(0, 0, 627, 465, 'westernBack').setOrigin(0, 0);
         console.log(this);
         
         //add background music
