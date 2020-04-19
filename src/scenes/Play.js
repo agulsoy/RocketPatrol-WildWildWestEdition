@@ -22,15 +22,15 @@ class Play extends Phaser.Scene {
          this.bgm.play();
 
         //green UI background
-        this.add.rectangle(37, 42, 566, 64, 0x00FF00).setOrigin(0.0);
+        this.add.rectangle(37, 20, 566, 64, 0x00FF00).setOrigin(0.0);
 
-        //add rocket (p1)
-        this.p1Cowboy = new Cowboy(this, game.config.width/2 - 8, 431, 'Cowboy').setScale(0.5, 0.5).setOrigin(0.5, 0.5);
+        //add cowboy (p1)
+        this.p1Cowboy = new Cowboy(this, game.config.width/2 - 8, 435, 'Cowboy').setScale(0.5, 0.5).setOrigin(0.5, 0.5);
 
         //add horsemen (x3)
-        this.horseman01 = new Horsemen(this, game.config.width +192, 132, 'Horsemen', 0, 30).setOrigin(0, 0); 
-        this.horseman02 = new Horsemen(this, game.config.width + 96, 196, 'Horsemen', 0, 20).setOrigin(0, 0); 
-        this.horseman03 = new Horsemen(this, game.config.width, 260, 'Horsemen', 0, 10).setOrigin(0, 0); 
+        this.horseman01 = new Horsemen(this, game.config.width +192, 155, 'Horsemen', 0, 30).setOrigin(0, 0); 
+        this.horseman02 = new Horsemen(this, game.config.width + 96, 235, 'Horsemen', 0, 20).setOrigin(0, 0); 
+        this.horseman03 = new Horsemen(this, game.config.width, 305, 'Horsemen', 0, 10).setOrigin(0, 0); 
 
         //define keyboard keys
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
@@ -60,7 +60,7 @@ class Play extends Phaser.Scene {
             },
             fixedWidth: 100
         }
-        this.scoreLeft = this.add.text(69, 54, this.p1Score, scoreConfig);
+        this.scoreLeft = this.add.text(69, 34, this.p1Score, scoreConfig);
 
         //FIRE text
         let fireConfig = {
@@ -73,9 +73,9 @@ class Play extends Phaser.Scene {
                 top: 5,
                 bottom: 5,
             },
-            fixedWidth: 225
+            fixedWidth: 220
         }
-        this.fireText = this.add.text(350, 54, "horsemanT COMPUTER", fireConfig).setOrigin(0, 0);
+        this.fireText = this.add.text(350, 34, "FIRE COMPUTER", fireConfig).setOrigin(0, 0);
 
         //Display Text 
         //let centerX = game.config.width/2;
