@@ -7,13 +7,14 @@ class Play extends Phaser.Scene {
         this.load.image('Cowboy', './assets/cowboy.png');
         this.load.image('Horsemen', './assets/horseman1.png');
         this.load.image('westernBack', './assets/westernBack.png');
+        this.load.image('Bullet', './assets/Bullet.png');
         this.load.spritesheet('Explosion', './assets/Explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 10});
     }
 
     create(){
         //place tile sprite
         this.westernBack = this.add.tileSprite(0, 0, 640, 480, 'westernBack').setOrigin(0, 0);
-        console.log(this);
+        //console.log(this);
         
         //add background music
          this.bgm = this.sound.add('backgroundMusic');
@@ -24,8 +25,11 @@ class Play extends Phaser.Scene {
         //green UI background
         this.add.rectangle(37, 20, 566, 64, 0x00FF00).setOrigin(0.0);
 
-        //add cowboy (p1)
-        this.p1Cowboy = new Cowboy(this, game.config.width/2 - 8, 435, 'Cowboy').setScale(0.5, 0.5).setOrigin(0.5, 0.5);
+        //add cowboy
+        //this.Cowboy = this.add.sprite(game.config.width/2 -8, 445, 'Cowboy');
+
+        //add bullet (p1)
+        this.p1Cowboy = new Cowboy(this, game.config.width/2 - 8, 450, 'Cowboy').setScale(0.5, 0.5).setOrigin(0.5, 0.5);
 
         //add horsemen (x3)
         this.horseman01 = new Horsemen(this, game.config.width +192, 155, 'Horsemen', 0, 30).setOrigin(0, 0); 
@@ -77,12 +81,6 @@ class Play extends Phaser.Scene {
         }
         this.fireText = this.add.text(350, 34, "FIRE COMPUTER", fireConfig).setOrigin(0, 0);
 
-        //Display Text 
-        //let centerX = game.config.width/2;
-        //let centerY = game.config.height;
-        //let textSpacer = 64;
-        //this.add.text(centerX, centerY, 'FIRE COMPUTER', fireConfig).setOrigin(0, 0);
-
         //game over flag
         this.gameOver = false;
 
@@ -109,7 +107,7 @@ class Play extends Phaser.Scene {
         this.westernBack.tilePositionX -= 4;
 
         if(!this.gameOver){
-            this.p1Cowboy.update(); //update Rocket
+            this.p1Cowboy.update(); //update bullet
             this.horseman01.update();   //update horsemen(x3)
             this.horseman02.update();
             this.horseman03.update();

@@ -16,8 +16,8 @@ class Menu extends Phaser.Scene {
         let menuConfig = {
             fontFamily: 'Courier',
             fontSize: '27px',
-            backgroundColor: '#F3B141',
-            color: '#843605',
+            backgroundColor: '#000000',
+            color: '#FFFFFF',
             align: 'right',
             padding: {
                 top:5,
@@ -31,10 +31,10 @@ class Menu extends Phaser.Scene {
         let centerY = game.config.height/2;
         let textSpacer = 64;
 
-        this.add.text(centerX, centerY- textSpacer, 'ROCKET PATROL', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY- textSpacer, 'ROCKET PATROL: \nWILD WEST EDITION', menuConfig).setOrigin(0.5);
+        menuConfig.backgroundColor = '#2F4F4F',
+        menuConfig.color = '#FFF';
         this.add.text(centerX, centerY, 'Use <- -> arrows to move & (F) to Fire', menuConfig).setOrigin(0.5);
-        menuConfig.backgroundColor = '#00FF00';
-        menuConfig.color = '#000';
         this.add.text(centerX, centerY + textSpacer, 'Press <- for Easy or -> for Hard', menuConfig).setOrigin(0.5);
         //Change scenes
 
