@@ -4,11 +4,12 @@ class Play extends Phaser.Scene {
     }
     preload(){
         //load images /title sprite
-        this.load.image('Cowboy', './assets/cowboy.png');
-        this.load.image('Horsemen', './assets/horseman1.png');
+        this.load.image('Missile', './assets/missile.png');
+        this.load.image('Cowboy', './assets/cowboy.png')
+        this.load.image('Horsecarriage', './assets/horsecarriage.png');
         this.load.image('westernBack', './assets/westernBack.png');
         this.load.image('Bullet', './assets/Bullet.png');
-        this.load.spritesheet('Explosion', './assets/Explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 10});
+        this.load.spritesheet('Explosion', './assets/Explosion.png', {frameWidth: 150, frameHeight: 75, startFrame: 0, endFrame: 10});
     }
 
     create(){
@@ -23,18 +24,15 @@ class Play extends Phaser.Scene {
          this.bgm.play();
 
         //green UI background
-        this.add.rectangle(37, 20, 566, 64, 0x00FF00).setOrigin(0.0);
-
-        //add cowboy
-        //this.Cowboy = this.add.sprite(game.config.width/2 -8, 445, 'Cowboy');
+        //this.add.rectangle(37, 20, 566, 64, 0x00FF00).setOrigin(0.0);
 
         //add bullet (p1)
-        this.p1Cowboy = new Cowboy(this, game.config.width/2 - 8, 450, 'Cowboy').setScale(0.5, 0.5).setOrigin(0.5, 0.5);
+        this.p1Missile = new Missile(this, game.config.width/2 - 8, 450, 'Missile').setScale(0.5, 0.5).setOrigin(0.5, 0.5);
 
         //add horsemen (x3)
-        this.horseman01 = new Horsemen(this, game.config.width +192, 155, 'Horsemen', 0, 30).setOrigin(0, 0); 
-        this.horseman02 = new Horsemen(this, game.config.width + 96, 235, 'Horsemen', 0, 20).setOrigin(0, 0); 
-        this.horseman03 = new Horsemen(this, game.config.width, 305, 'Horsemen', 0, 10).setOrigin(0, 0); 
+        this.carriage01 = new Horsecarriage(this, game.config.width +192, 200, 'Horsecarriage', 0, 30).setOrigin(0, 0); 
+        this.carriage02 = new Horsecarriage(this, game.config.width + 96, 250, 'Horsecarriage', 0, 20).setOrigin(0, 0); 
+        this.carriage03 = new Horsecarriage(this, game.config.width, 305, 'Horsecarriage', 0, 10).setOrigin(0, 0); 
 
         //define keyboard keys
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
@@ -53,10 +51,10 @@ class Play extends Phaser.Scene {
 
         //score display
         let scoreConfig = {
-            fontFamily: 'Courier',
+            fontFamily: 'Algerian',
             fontSize: '28px',
             backgroundColor: '#F3B141',
-            color: '#843605',
+            color: '#000000',
             align: 'right',
             padding: {
                 top:5,
@@ -68,7 +66,7 @@ class Play extends Phaser.Scene {
 
         //FIRE text
         let fireConfig = {
-            fontFamily: 'Courier',
+            fontFamily: 'Algerian',
             fontSize: '28px',
             backgroundColor: '#F3B141',
             color: '#000000',
@@ -83,7 +81,7 @@ class Play extends Phaser.Scene {
 
         //game over flag
         this.gameOver = false;
-
+        scoreConfig.fontSize = '30px';
         //60-second play clock
         scoreConfig.fixedWidth = 0;
         this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
@@ -107,52 +105,52 @@ class Play extends Phaser.Scene {
         this.westernBack.tilePositionX -= 4;
 
         if(!this.gameOver){
-            this.p1Cowboy.update(); //update bullet
-            this.horseman01.update();   //update horsemen(x3)
-            this.horseman02.update();
-            this.horseman03.update();
+            this.p1Missile.update(); //update bullet
+            this.carriage01.update();   //update horsemen(x3)
+            this.carriage02.update();
+            this.carriage03.update();
         }
 
         //check collisions
-        if(this.checkCollision(this.p1Cowboy, this.horseman03)){
-            this.p1Cowboy.reset();
-            this.horsemanExplode(this.horseman03);
+        if(this.checkCollision(this.p1Missile, this.carriage03)){
+            this.p1Missile.reset();
+            this.carriageExplode(this.carriage03);
         }
-        if(this.checkCollision(this.p1Cowboy, this.horseman02)){
-            this.p1Cowboy.reset();
-            this.horsemanExplode(this.horseman02);
+        if(this.checkCollision(this.p1Missile, this.carriage02)){
+            this.p1Missile.reset();
+            this.carriageExplode(this.carriage02);
         }
-        if(this.checkCollision(this.p1Cowboy, this.horseman01)){
-            this.p1Cowboy.reset();
-            this.horsemanExplode(this.horseman01);
+        if(this.checkCollision(this.p1Missile, this.carriage01)){
+            this.p1Missile.reset();
+            this.carriageExplode(this.carriage01);
         }
     }
     
-    checkCollision(cowboy, horseman){
+    checkCollision(missile, horsecarriage){
     //simple AABB checking
-        if(cowboy.x < horseman.x + horseman.width &&
-            cowboy.x + cowboy.width > horseman.x &&
-            cowboy.y < horseman.y + horseman.height &&
-            cowboy.height + cowboy.y > horseman.y) {
+        if(missile.x < horsecarriage.x + horsecarriage.width &&
+            missile.x + missile.width > horsecarriage.x &&
+            missile.y < horsecarriage.y + horsecarriage.height &&
+            missile.height + missile.y > horsecarriage.y) {
                 return true;
         } else{
             return false;
         }
     }
 
-    horsemanExplode(horseman){
-        horseman.alpha = 0; //temporarily hide horseman
-        //create explosion sprite at horseman's position
-        let boom = this.add.sprite(horseman.x, horseman.y, 'Explosion').setOrigin(0, 0);
+    carriageExplode(horsecarriage){
+        horsecarriage.alpha = 0; //temporarily hide horsecarriage
+        //create explosion sprite at horsecarriage's position
+        let boom = this.add.sprite(horsecarriage.x, horsecarriage.y, 'Explosion').setOrigin(0, 0);
         boom.anims.play('explode'); //play explode animation
         boom.on('animationcomplete', () => {    //callback after animation complete
-            horseman.reset();   //reset horseman position
-            horseman.alpha = 1; //make horseman visible again
+            horsecarriage.reset();   //reset horsecarriage position
+            horsecarriage.alpha = 1; //make horsecarriage visible again
             boom.destroy(); //remove explosion sprite
         });
         //score increment and repaint
-        this.p1Score += horseman.points;
+        this.p1Score += horsecarriage.points;
         this.scoreLeft.text = this.p1Score;
-        this.sound.play('sfx_JustShot');
+        this.sound.play('sfx_Explosion');
     }
 }

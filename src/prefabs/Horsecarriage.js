@@ -1,5 +1,5 @@
-//Horsemen prefab
-class Horsemen extends Phaser.GameObjects.Sprite{
+//Horsecarriage prefab
+class Horsecarriage extends Phaser.GameObjects.Sprite{
     constructor(scene, x, y, texture, frame, pointValue){
         super(scene, x, y, texture, frame);
 
