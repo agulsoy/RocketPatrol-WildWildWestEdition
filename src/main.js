@@ -6,6 +6,14 @@ Point Breakdown:
     Create a new title screen (15)
     Create new artwork for all of the in-game assets (rocket, spaceships, explosion) (25)
     Redesign the game's artwork, UI, and sound to change its theme/aesthetic (to something other than sci-fi) (50)
+
+    Sources:
+        Missile SFX - http://soundbible.com/1794-Missle-Launch.html
+        Building Constructors - https://www.phaser.io/docs/2.6.2/Phaser.Sprite.html
+        Making Title Scene - https://video.search.yahoo.com/search/video?fr=mcafee&p=how+to+make+cutscene+in+phaser+3#id=2&vid=c14653553068bcc02d9c4662315eac43&action=view
+        Scene Transition - https://www.youtube.com/watch?v=S1VSKkL_ePM&t=550s
+        Scene Transition Examples - http://phaser.io/examples/v3/view/physics/matterjs/scene-transition
+        Color Schemes - https://www.rapidtables.com/web/color/index.html
 */
 
 let titleScene = new TitleScene();
