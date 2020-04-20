@@ -4,6 +4,8 @@ class Menu extends Phaser.Scene {
     }
 
     preload(){
+        //load cowboy
+        this.load.image('Cowboy', './assets/cowboy2.png');
         //load audio
         this.load.audio('sfx_select', './assets/Blip_Select.wav');
         this.load.audio('sfx_Explosion', './assets/Explosion.mp3');
@@ -12,6 +14,7 @@ class Menu extends Phaser.Scene {
     }
 
     create(){
+        this.add.sprite(30, 30, 'Cowboy').setOrigin(0, 0);
 
         let menuConfig = {
             fontFamily: 'Courier',
@@ -31,11 +34,11 @@ class Menu extends Phaser.Scene {
         let centerY = game.config.height/2;
         let textSpacer = 64;
 
-        this.add.text(centerX, centerY- textSpacer, 'ROCKET PATROL: \nWILD WEST EDITION', menuConfig).setOrigin(0.5);
-        menuConfig.backgroundColor = '#2F4F4F',
+        this.add.text(centerX+100, centerY- textSpacer -100, 'ROCKET PATROL: \nWILD WEST EDITION', menuConfig).setOrigin(0.5);
+        menuConfig.backgroundColor = '#996515',
         menuConfig.color = '#FFF';
-        this.add.text(centerX, centerY, 'Use <- -> arrows to move & (F) to Fire', menuConfig).setOrigin(0.5);
-        this.add.text(centerX, centerY + textSpacer, 'Press <- for Easy or -> for Hard', menuConfig).setOrigin(0.5);
+        this.add.text(centerX+100, centerY-50, 'Use <- -> arrows to move \n& (F) to Fire', menuConfig).setOrigin(0.5);
+        this.add.text(centerX+100, centerY + textSpacer, 'Press <- for Easy \nor -> for Hard', menuConfig).setOrigin(0.5);
         //Change scenes
 
         //define keys
